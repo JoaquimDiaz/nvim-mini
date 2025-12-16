@@ -3,10 +3,6 @@
 -- └─────────────────────────┘
 --
 -- This file contains installation and configuration of plugins outside of MINI.
--- They significantly improve user experience in a way not yet possible with MINI.
--- These are mostly plugins that provide programming language specific behavior.
---
--- Use this file to install and configure other such plugins.
 
 -- Make concise helpers for installing/adding plugins in two stages
 local add, later = MiniDeps.add, MiniDeps.later
@@ -50,6 +46,8 @@ now_if_args(function()
     'lua',
     'vimdoc',
     'markdown',
+    'python',
+    'nix',
     -- Add here more languages with which you want to use tree-sitter
     -- To see available languages:
     -- - Execute `:=require('nvim-treesitter').get_available()`
@@ -95,9 +93,11 @@ now_if_args(function()
   -- the rules provided by 'nvim-lspconfig'.
   -- Use `:h vim.lsp.config()` or 'after/lsp/' directory to configure servers.
   -- Uncomment and tweak the following `vim.lsp.enable()` call to enable servers.
-  -- vim.lsp.enable({
-  --   -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
-  -- })
+  vim.lsp.enable({
+    'basedpyright',
+    'lua_ls',
+    'nil_ls'
+  })
 end)
 
 -- Formatting =================================================================
@@ -132,6 +132,10 @@ end)
 -- 'mini.snippets' is designed to work with it as seamlessly as possible.
 -- See `:h MiniSnippets.gen_loader.from_lang()`.
 later(function() add('rafamadriz/friendly-snippets') end)
+
+-- My Plugins =================================================================
+
+MiniDeps.now(function() add('Vigemus/iron.nvim') end)
 
 -- Honorable mentions =========================================================
 
