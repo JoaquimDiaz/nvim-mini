@@ -1,3 +1,5 @@
+-- Iron Configuration =========================================================
+
 local iron = require('iron.core')
 local view = require('iron.view')
 local common = require('iron.fts.common')
@@ -41,6 +43,7 @@ nmap('<leader>ru',  iron.send_until_cursor,  'send until cursor')
 nmap('<leader>rF',  iron.send_file,          'send file')
 nxmap('<leader>rc', iron.send_motion,        'send chunk')
 
+-- Function to move the cursor after `send_code_block`
 local send_code_block_and_move = function()
   iron.send_code_block(true)
 end
