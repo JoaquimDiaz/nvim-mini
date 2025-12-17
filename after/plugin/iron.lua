@@ -9,7 +9,11 @@ iron.setup {
     scratch_repl = true,
     repl_definition = {
       python = {
-        command = { 'ipython', '--no-autoindent' },
+        command = {
+          'ipython',
+          '--no-autoindent',
+          '--colors=Linux',
+        },
         format = common.bracketed_paste_python,
         block_dividers = { '# %%', '#%%' },
       },
