@@ -52,3 +52,37 @@ end
 nmap('<leader>rb', iron.send_code_block,            'send block')
 nmap('<leader>rn', send_code_block_and_move,        'send block + move')
 nxmap('<leader>rm', iron.mark_motion,               'mark')
+
+
+-- Jumping between cells ======================================================
+
+local function cell_jump(dir)
+  local patterns = { [[^# %%$]], [[^#%%$]] }
+  local flags = (dir == 'next') and 'W' or 'bW'
+
+  -- If you're on a divider and going "next", skip the current one
+  if dir == 'next' then
+    local line = vim.fn.getline('.')
+    if line:match(patterns[1]) or line:match(patterns[2]) then
+      vim.cmd('normal! j')
+    end
+  end
+
+  for _, pat in ipairs(patterns) do
+    if vim.fn.search(pat, flags) ~= 0 then return end
+  end
+end
+
+nmap(']n', function() cell_jump('next') end, 'Next cell divider')
+nmap('[n', function() cell_jump('prev') end, 'Previous cell divider')
+
+-- "first/last" like mini.bracketed does for built-ins:
+nmap('[N', function()
+  vim.cmd('normal! gg')
+  cell_jump('next')
+end, 'First cell divider')
+
+nmap(']N', function()
+  vim.cmd('normal! G')
+  cell_jump('prev')
+end, 'Last cell divider')
