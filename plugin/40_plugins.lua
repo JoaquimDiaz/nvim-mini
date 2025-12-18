@@ -48,11 +48,8 @@ now_if_args(function()
     'markdown',
     'python',
     'nix',
-    -- Add here more languages with which you want to use tree-sitter
     -- To see available languages:
     -- - Execute `:=require('nvim-treesitter').get_available()`
-    -- - Visit 'SUPPORTED_LANGUAGES.md' file at
-    --   https://github.com/nvim-treesitter/nvim-treesitter/blob/main
   }
   local isnt_installed = function(lang)
     return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0
@@ -157,9 +154,9 @@ MiniDeps.now(function() add('Vigemus/iron.nvim') end)
 -- enabled in 'plugin/30_mini.lua' or other suggested 'mini.hues' based ones.
 -- MiniDeps.now(function()
 --   -- Install only those that you need
---   add('sainnhe/everforest')
---   add('Shatur/neovim-ayu')
---   add('ellisonleao/gruvbox.nvim')
+  add('sainnhe/everforest')
+  add('Shatur/neovim-ayu')
+  add('ellisonleao/gruvbox.nvim')
 --
 --   -- Enable only one
 --   vim.cmd('color everforest')
