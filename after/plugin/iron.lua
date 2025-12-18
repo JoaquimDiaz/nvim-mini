@@ -1,3 +1,40 @@
+-- REPL command ===============================================================
+
+local function python_repl_cmd(meta)
+  -- Get buffer number
+  local bufnr = meta and meta.current_bufnr or vim.api.nvim_get_current_buf()
+
+  -- Validate bufnr
+  if type(bufnr) ~= "number" or not vim.api.nvim_buf_is_valid(bufnr) then
+    bufnr = vim.api.nvim_get_current_buf()
+  end
+
+  -- Find the root of the project
+  local buf = vim.api.nvim_buf_get_name(bufnr)
+  local start_path = buf ~= "" and vim.fs.dirname(buf) or vim.loop.cwd()
+  local anchor = vim.fs.find({ ".venv", "pyproject.toml", "requirements.txt", ".git" }, {
+    upward = true,
+    path = start_path,
+  })[1]
+  local root = anchor and vim.fs.dirname(anchor) or vim.loop.cwd()
+  local venv = vim.fs.joinpath(root, ".venv")
+  local venv_ipy = vim.fs.joinpath(venv, "bin", "ipython")
+  local venv_py = vim.fs.joinpath(venv, "bin", "python")
+
+  -- Look for ipython / python executable
+  -- Construct the 'cmd' from the first executable found
+  local cmd
+  if vim.fn.executable(venv_ipy) == 1 then
+    cmd = { venv_ipy, "--no-autoindent", "--colors=Linux" }
+  elseif vim.fn.executable(venv_py) == 1 then
+    cmd = { venv_py, "-m", "IPython", "--no-autoindent", "--colors=Linux" }
+  else
+    cmd = { "ipython", "--no-autoindent", "--colors=Linux" }
+  end
+
+  return cmd
+end
+
 -- Iron Configuration =========================================================
 
 local iron = require('iron.core')
@@ -9,11 +46,7 @@ iron.setup {
     scratch_repl = true,
     repl_definition = {
       python = {
-        command = {
-          'ipython',
-          '--no-autoindent',
-          '--colors=Linux',
-        },
+        command = python_repl_cmd,
         format = common.bracketed_paste_python,
         block_dividers = { '# %%', '#%%' },
       },
