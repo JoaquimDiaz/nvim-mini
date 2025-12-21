@@ -134,6 +134,13 @@ later(function() add('rafamadriz/friendly-snippets') end)
 
 MiniDeps.now(function() add('Vigemus/iron.nvim') end)
 
+later(
+  function()
+    add('GCBallesteros/jupytext.nvim')
+    require('jupytext').setup({})
+  end
+)
+
 -- Honorable mentions =========================================================
 
 -- 'mason-org/mason.nvim' (a.k.a. "Mason") is a great tool (package manager) for
