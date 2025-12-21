@@ -23,6 +23,17 @@ tmap('<C-j>', [[<C-\><C-n><C-w>j]], 'Terminal window down')
 tmap('<C-k>', [[<C-\><C-n><C-w>k]], 'Terminal window up')
 tmap('<C-l>', [[<C-\><C-n><C-w>l]], 'Terminal window right')
 
+-- Adding a toggle option for 'colorcolumn'
+local toggle_cc = function()
+  if vim.o.cc == "" then
+    vim.o.cc = "80"
+  else
+    vim.o.cc = ""
+  end
+end
+
+nmap('\\k', toggle_cc, "Toggle 'colorcolumn'")
+
 -- Paste linewise before/after current line
 -- Usage: `yiw` to yank a word and `]p` to put it on the next line.
 nmap('[p', '<Cmd>exe "put! " . v:register<CR>', 'Paste Above')
