@@ -164,6 +164,9 @@ later(
   add('sainnhe/everforest')
   add('Shatur/neovim-ayu')
   add('ellisonleao/gruvbox.nvim')
+  add('Mofiqul/vscode.nvim')
+
+vim.cmd('color vscode')
 --
 --   -- Enable only one
 --   vim.cmd('color everforest')

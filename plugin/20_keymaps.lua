@@ -155,6 +155,11 @@ pick.registry.files_home = function(local_opts)
   return pick.builtin.files(local_opts, opts)
 end
 
+
+local pick_oldfiles = function()
+  require("mini.extra").pickers.oldfiles()
+end
+
 nmap_leader('f/', '<Cmd>Pick history scope="/"<CR>',            '"/" history')
 nmap_leader('f:', '<Cmd>Pick history scope=":"<CR>',            '":" history')
 -- nmap_leader('fa', '<Cmd>Pick git_hunks scope="staged"<CR>',     'Added hunks (all)')
@@ -168,7 +173,8 @@ nmap_leader('ff', '<Cmd>Pick files<CR>',                        'Files')
 nmap_leader('fF', '<Cmd>Pick files_home<CR>',                   'Files from home')
 nmap_leader('fg', '<Cmd>Pick grep_live<CR>',                    'Grep live')
 nmap_leader('fG', '<Cmd>Pick grep pattern="<cword>"<CR>',       'Grep current word')
-nmap_leader('fh', '<Cmd>Pick help<CR>',                         'Help tags')
+nmap_leader('fh', pick_oldfiles,                                'Files from history')
+-- nmap_leader('fh', '<Cmd>Pick help<CR>',                         'Help tags')
 -- nmap_leader('fH', '<Cmd>Pick hl_groups<CR>',                    'Highlight groups')
 nmap_leader('fl', '<Cmd>Pick buf_lines scope="all"<CR>',        'Lines (all)')
 nmap_leader('fL', '<Cmd>Pick buf_lines scope="current"<CR>',    'Lines (buf)')
