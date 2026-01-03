@@ -50,6 +50,8 @@ iron.setup {
         format = common.bracketed_paste_python,
         block_dividers = { '# %%', '#%%' },
       },
+      c = { command = { "cling" } },
+      cpp = { command = { "cling" } }
     },
     repl_open_cmd = view.split.vertical(0.4)
   },
